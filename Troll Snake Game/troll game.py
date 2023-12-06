@@ -4,6 +4,44 @@ import time
 import random
 
 size = 40
+class MainMenu:
+    def __init__(self):
+        pygame.init()
+        self.surface = pygame.display.set_mode((800, 500))
+        pygame.display.set_caption("TIME TO TROLL - Main Menu")
+        self.clock = pygame.time.Clock()
+        self.is_closed = False
+
+        self.troll_image = pygame.image.load("pictures and music/trollmenu.png").convert()
+
+    def display_menu(self):
+        font = pygame.font.SysFont('Comic Sans', 36)
+        title_text = font.render("To start TROLLING", True, (0, 0, 0))
+        start_text = font.render("Press Enter to Start", True, (0, 0, 0))
+
+        self.surface.fill((0, 0, 0))
+
+        self.surface.blit(self.troll_image,(0,0))
+        self.surface.blit(title_text, (250, 110))
+        self.surface.blit(start_text, (250, 330))
+        pygame.display.flip()
+
+    def run(self):
+        menu_running = True
+        while menu_running:
+            for event in pygame.event.get():
+                if event.type == KEYDOWN and event.key == K_RETURN:
+                    menu_running = False
+                elif event.type == QUIT:
+                    pygame.quit()
+                    quit()
+
+            self.display_menu()
+            self.clock.tick(10)
+
+        pygame.quit()
+        self.is_closed = True
+
 
 class watermelon:
     def __init__(self,main_screen):
@@ -94,7 +132,7 @@ class Game:
         pygame.mixer.music.load("pictures and music/Troll Face Song.mp3")
         pygame.mixer.music.play()
     def score(self):
-            font = pygame.font.SysFont('arial', 20)
+            font = pygame.font.SysFont('Comic Sans', 20)
             score1 = font.render(f"Trolls: {self.snake.length}", True, (255, 255, 255))
             self.surface.blit(score1, (720, 10))
 
@@ -190,6 +228,14 @@ class Game:
             time.sleep(.1)
 
 if __name__ == "__main__":
+    mainmenu = MainMenu()
+    mainmenu.run()
+
+
+if __name__ == "__main__":
     game = Game()
     game.run()
 
+    if not mainmenu.is_closed:
+        game = Game()
+        game.run()
