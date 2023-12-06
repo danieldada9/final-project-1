@@ -5,8 +5,6 @@ import random
 
 size = 40
 
-
-
 class watermelon:
     def __init__(self,main_screen):
         self.image = pygame.image.load("pictures and music/watermelon.png").convert()
@@ -132,7 +130,6 @@ class Game:
                 or self.snake.y[0] >= self.surface.get_height()
         ):
             raise Exception('Game Over')
-
     def show_game_over(self):
         self.background()
         font = pygame.font.SysFont('arial', 20)
