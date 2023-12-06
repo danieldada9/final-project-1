@@ -15,8 +15,8 @@ class watermelon:
         self.y = size * 2
 
     def move(self):
-        self.x = random.randint(0,17) * size
-        self.y = random.randint(0,13) * size
+        self.x = random.randint(0,15) * size
+        self.y = random.randint(0,10) * size
     def draw(self):
         self.main_screen.blit(self.image, (self.x, self.y))
         pygame.display.flip()
@@ -78,8 +78,7 @@ class Game:
 
         pygame.mixer.init()
         self.backgroundmusic()
-
-        self.surface = pygame.display.set_mode((1000, 522))
+        self.surface = pygame.display.set_mode((800, 500))
         self.surface.fill((0, 0, 0))
         self.snake = Snake(self.surface,1)
         self.snake.draw()
@@ -124,8 +123,15 @@ class Game:
             if self.eatwatermelon(self.snake.x[0], self.snake.y[0], self.snake.x[i], self.snake.y[i]):
                 sound = pygame.mixer.music.load("pictures and music/troll.mp3")
                 pygame.mixer.music.play(sound)
-                raise 'you got trolled'
+                raise 'Game Over'
 
+        if (
+                self.snake.x[0] < 0
+                or self.snake.x[0] >= self.surface.get_width()
+                or self.snake.y[0] < 0
+                or self.snake.y[0] >= self.surface.get_height()
+        ):
+            raise Exception('Game Over')
 
     def show_game_over(self):
         self.background()
@@ -172,6 +178,7 @@ class Game:
                             self.snake.move_down()
 
 
+
                 elif event.type == QUIT:
                     running = False
             try:
@@ -183,7 +190,7 @@ class Game:
                 pause = True
                 self.reset()
 
-            time.sleep(.2)
+            time.sleep(.1)
 
 if __name__ == "__main__":
     game = Game()
